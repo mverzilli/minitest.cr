@@ -45,6 +45,7 @@ describe Minitest::Spec do
 
   describe "let" do
     let(:foo) { Foo.new }
+    let(now : Time) { Time.now }
 
     it "memoizes the object for the duration of the test" do
       foo.bar = "baz"
@@ -53,6 +54,10 @@ describe Minitest::Spec do
 
     it "regenerates the object on each teardown" do
       assert_nil foo.bar
+    end
+
+    it "declares the object type" do
+      assert now.is_a?(Time)
     end
   end
 

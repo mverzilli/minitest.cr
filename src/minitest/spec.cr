@@ -3,8 +3,13 @@ require "./expectations"
 module Minitest
   class Spec < Test
     macro let(name, &block)
+      {% if name.is_a?(TypeDeclaration) %}
+        @{{name.id}}?
+        {% name = name.var %}
+      {% end %}
+
       def {{ name.id }}
-        @{{ name.id }} ||= begin; {{ yield }}; end
+        @{{ name.id }} ||= {{ yield }}
       end
     end
 
